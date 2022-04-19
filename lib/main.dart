@@ -23,9 +23,17 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w200,
           ),
           headline2: TextStyle(
-              fontSize: 27,
-              fontWeight: FontWeight.bold,
-              color: Color(0xff0C1A30)),
+            fontSize: 27,
+            fontWeight: FontWeight.bold,
+            color: Color(0xff0C1A30),
+          ),
+          bodyText1: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+          bodyText2: TextStyle(
+            fontSize: 16,
+          ),
         ),
         inputDecorationTheme: InputDecorationTheme(
           fillColor: Color(0xffC4C5C4),
