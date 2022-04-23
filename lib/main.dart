@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:shopa/splash_screen.dart';
+import 'package:shopa/ui/account/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,12 +37,12 @@ class MyApp extends StatelessWidget {
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          fillColor: Color(0xffC4C5C4),
+          fillColor: Color.fromARGB(255, 243, 240, 240),
           filled: true,
           border: InputBorder.none,
         ),
       ),
-      home: const Splash(),
+      home: const Home(),
     );
   }
 }
