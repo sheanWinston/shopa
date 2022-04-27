@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           border: InputBorder.none,
         ),
       ),
-      home: const Home(),
+      home: Home(),
     );
   }
 }
