@@ -1,7 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shopa/models/products_response.dart';
 import 'package:shopa/ui/widgets/product_widget.dart';
+import 'package:http/http.dart' as http;
 
 class Dashboard extends StatefulWidget {
   Dashboard({
@@ -34,6 +38,28 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  Future<List<ProductsResponse>> getProducts() async {
+    List<ProductsResponse> allProducts;
+
+    print('loading');
+    var url = Uri.parse('https://fakestoreapi.com/products');
+    var response = await http.get(url);
+    List result = jsonDecode(response.body);
+
+    allProducts =
+        result.map((dynamic e) => ProductsResponse.fromJson(e)).toList();
+
+    print('done');
+    print(allProducts[0].title);
+
+    return allProducts;
+  }
+
+  @override
+  void initState() {
+    getProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -53,7 +79,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             SizedBox(height: 40),
-            Container(
+            SizedBox(
               width: 400,
               height: 230,
               child: ListView(
@@ -70,17 +96,30 @@ class _DashboardState extends State<Dashboard> {
             SizedBox(
               width: 400,
               height: 270,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.products.length,
-                itemBuilder: ((context, index) {
-                  final product = widget.products[index];
-                  return SizedBox(
-                    width: 195,
-                    child: ProductWidget(product: product),
-                  );
-                }),
-              ),
+              child: FutureBuilder(
+                  future: getProducts(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.connectionState ==
+                            ConnectionState.done &&
+                        snapshot.hasError) {
+                      return Text('An error occured ${snapshot.error} ');
+                    }
+                    print(snapshot.data);
+                    List<ProductsResponse> allProducts = snapshot.data;
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: allProducts.length,
+                      itemBuilder: ((context, index) {
+                        final product = allProducts[index];
+                        return SizedBox(
+                          width: 195,
+                          child: ProductWidget(product: product),
+                        );
+                      }),
+                    );
+                  }),
             ),
             SizedBox(height: 30),
             Text('Latest News', style: Theme.of(context).textTheme.bodyText1),
@@ -137,4 +176,3 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 }
-

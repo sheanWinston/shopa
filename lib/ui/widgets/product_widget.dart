@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:shopa/models/products_response.dart';
 
 class ProductWidget extends StatelessWidget {
-  const ProductWidget({
+  ProductWidget({
     Key? key,
     required this.product,
   }) : super(key: key);
 
-  final Map<String, dynamic> product;
+  ProductsResponse product;
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +20,21 @@ class ProductWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Image.asset(product['image']),
+            SizedBox(
+              height: 100,
+              child: Center(
+                child: Image.network(product.image ?? ''),
+              ),
             ),
             SizedBox(height: 20),
             Text(
-              product['title'],
+              '${product.title}',
+              maxLines: 2,
               style: Theme.of(context).textTheme.bodyText1,
             ),
             SizedBox(height: 5),
             Text(
-              'N${product['price']}',
+              'N${product.price}',
               style: Theme.of(context).textTheme.bodyText2?.copyWith(
                     color: Colors.red,
                   ),

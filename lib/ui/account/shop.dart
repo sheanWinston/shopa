@@ -51,7 +51,7 @@ class _ShopState extends State<Shop> {
               shrinkWrap: true,
               itemCount: products.length,
               itemBuilder: (BuildContext context, int index) {
-                return ProductWidget(product: products[index]);
+                return Text('data');
               },
             ),
           ],
