@@ -41,7 +41,6 @@ class _DashboardState extends State<Dashboard> {
   Future<List<ProductsResponse>> getProducts() async {
     List<ProductsResponse> allProducts;
 
-    print('loading');
     var url = Uri.parse('https://fakestoreapi.com/products');
     var response = await http.get(url);
     List result = jsonDecode(response.body);
@@ -50,7 +49,6 @@ class _DashboardState extends State<Dashboard> {
         result.map((dynamic e) => ProductsResponse.fromJson(e)).toList();
 
     print('done');
-    print(allProducts[0].title);
 
     return allProducts;
   }
