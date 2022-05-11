@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shopa/models/products_response.dart';
 import 'package:shopa/ui/widgets/product_widget.dart';
@@ -47,9 +48,6 @@ class _DashboardState extends State<Dashboard> {
 
     allProducts =
         result.map((dynamic e) => ProductsResponse.fromJson(e)).toList();
-
-    print('done');
-
     return allProducts;
   }
 
@@ -91,6 +89,32 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             SizedBox(height: 40),
+            GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                          ),
+                          itemCount: 6,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Text("$index");
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+              child: Text('See all'),
+            ),
             SizedBox(
               width: 400,
               height: 270,
